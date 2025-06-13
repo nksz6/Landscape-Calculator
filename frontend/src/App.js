@@ -1,22 +1,20 @@
-import ProjectDetails from './components/ProjectDetails';
 import React, { useState, useEffect } from 'react';
+import ProjectDetails from './components/ProjectDetails';
 import './App.css';
 
-
 function App() {
-  // Create a state variable to hold the array of services
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
-  const handleServiceSelect  = (service) => {
-    setSelectedService(service);
-  };
 
   useEffect(() => {
-    // Fetch data from our new /api/services endpoint
     fetch('http://localhost:***REMOVED***/api/services')
-    .then(res => res.json()) // parse json
-    .then(data => setServices(data)); // Set the entire array of services
-  }, []); // The empty array means this effect runs only once
+      .then(res => res.json())
+      .then(data => setServices(data));
+  }, []);
+
+  const handleServiceSelect = (service) => {
+    setSelectedService(service);
+  };
 
   return (
     <div className="App">
@@ -37,10 +35,12 @@ function App() {
             );
           })}
         </div>
-
-        {/* This part is now cleaner and uses our new component */}
-        {selectedService && <ProjectDetails selectedService={selectedService} />}
-
+        {selectedService && (
+          <ProjectDetails
+            key={selectedService.id}
+            selectedService={selectedService}
+          />
+        )}
       </header>
     </div>
   );
