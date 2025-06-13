@@ -61,3 +61,23 @@
   border: 1px solid #ccc;
 }
 
+/* Add this to App.css */
+.cost-display {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #1a5e24;
+  border-radius: 8px;
+  border: 1px solid #4caf50;
+}
+.cost-display h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #c8e6c9;
+}
+.cost-display p {
+  margin: 5px 0 0 0;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
