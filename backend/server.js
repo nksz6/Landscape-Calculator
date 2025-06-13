@@ -1,29 +1,37 @@
 const express = require('express');
 const cors = require('cors');
-const { Pool } = require('pg'); // <-- Import the pg Pool
+const { Pool } = require('pg');
 
 const app = express();
 app.use(cors());
 const ***REMOVED*** = ***REMOVED***;
 
-// --- DATABASE CONNECTION ---
-
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'landscaping_calculator',
-    ***REMOVED***: 'iAuthAdmin420!', // <-- IM***REMOVED***ANT: This is actual ***REMOVED***!
+    ***REMOVED***: '***REMOVED***', // <-- IM***REMOVED***ANT: This is actual ***REMOVED***!
     port: 5432,
 });
 
-// --- API ENDPOINTS ---
-
-// GET all services
+// GET all services with their pricing
 app.get('/api/services', async (req, res) => {
     try {
-        // Query the database to get all rows from the services table
-        const result = await pool.query('SELECT * FROM services ORDER BY id');
-        // Send the results back as a JSON array
+        const query = `
+            SELECT
+                s.id,
+                s.name,
+                s.description,
+                s.unit_label,
+                pr.price_per_unit
+            FROM
+                services s
+            LEFT JOIN
+                pricing_rules pr ON s.id = pr.service_id
+            ORDER BY
+                s.id;
+        `;
+        const result = await pool.query(query);
         res.json(result.rows);
     } catch (err) {
         console.error(err.message);
@@ -31,7 +39,6 @@ app.get('/api/services', async (req, res) => {
     }
 });
 
-// Start the server and listen for incoming connections
 app.listen(***REMOVED***, () => {
   console.log(`Server is running on http://localhost:${***REMOVED***}`);
 });
