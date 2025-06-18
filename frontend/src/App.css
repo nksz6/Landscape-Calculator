@@ -86,3 +86,9 @@
   border-radius: 5px;
   width: calc(500px + 2 * 8px);
 }
+
+.calculate-btn:disabled {
+  background-color: #555;
+  color: #999;
+  cursor: not-allowed;
+}

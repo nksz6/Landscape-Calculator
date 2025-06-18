@@ -40,51 +40,58 @@ function ProjectDetails({ selectedService }) {
   // Check if we need to show the dropdown
   const showOptionsDropdown = selectedService.pricing_options.length > 1;
 
-  return (
-    <div className="selection-details">
-      <h3>Details for: {selectedService.name}</h3>
+  //disabled button logic
+  const isButtonDisabled = !inputValue || parseFloat(inputValue) <= 0;
 
-      {/* Conditionally render the dropdown */}
-      {showOptionsDropdown && (
-        <div className="input-group">
-          <label>Select Material:</label>
-          <select onChange={handleOptionChange} value={selectedOption.rule_id} className="material-select">
-            {selectedService.pricing_options.map(option => (
-              <option key={option.rule_id} value={option.rule_id}>
-                {option.material_name} (${option.price_per_unit}/sq ft)
-              </option>
-            ))}
-          </select>
+    return (
+        <div className="selection-details">
+            <h3>Details for: {selectedService.name}</h3>
+
+            {/* Conditionally render the dropdown */}
+            {showOptionsDropdown && (
+                <div className="input-group">
+                    <label>Select Material:</label>
+                    <select onChange={handleOptionChange} value={selectedOption.rule_id} className="material-select">
+                        {selectedService.pricing_options.map(option => (
+                            <option key={option.rule_id} value={option.rule_id}>
+                                {option.material_name} (${option.price_per_unit}/sq ft)
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            )}
+
+            <div className="input-group">
+                <label>Enter {selectedService.unit_label}:</label>
+                <input
+                    type="number"
+                    value={inputValue}
+                    onChange={e => setInputValue(e.target.value)}
+                    placeholder="0"
+                />
+            </div>
+        
+            <button
+                onClick={handleCalculateClick}
+                className="calculate-btn"
+                disabled={isButtonDisabled}
+            >
+                Calculate Cost
+            </button>
+
+            {estimatedCost !== null && (
+                <div className="cost-display">
+                    <h3>Estimated Cost:</h3>
+                    <p>${estimatedCost.toFixed(2)}</p>
+                    {minChargeApplied && (
+                        <p className="notice">
+                            (Minimum charge of ${parseFloat(selectedOption.minimum_charge).toFixed(2)} applied)
+                        </p>
+                    )}
+                </div>
+            )}
         </div>
-      )}
-
-      <div className="input-group">
-        <label>Enter {selectedService.unit_label}:</label>
-        <input
-          type="number"
-          value={inputValue}
-          onChange={e => setInputValue(e.target.value)}
-          placeholder="0"
-        />
-      </div>
-
-      <button onClick={handleCalculateClick} className="calculate-btn">
-        Calculate Cost
-      </button>
-
-      {estimatedCost !== null && (
-        <div className="cost-display">
-          <h3>Estimated Cost:</h3>
-          <p>${estimatedCost.toFixed(2)}</p>
-          {minChargeApplied && (
-            <p className="notice">
-              (Minimum charge of ${parseFloat(selectedOption.minimum_charge).toFixed(2)} applied)
-            </p>
-          )}
-        </div>
-      )}
-    </div>
-  );
+    );
 }
 
 export default ProjectDetails;
