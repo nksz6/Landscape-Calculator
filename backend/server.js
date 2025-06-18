@@ -10,7 +10,7 @@ const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'landscaping_calculator',
-  password: 'YourSecretPassword', // IMPORTANT: Use your actual password
+  password: 'IamtheAdmin420!', // IMPORTANT: Use your actual password
   port: 5432,
 });
 
