@@ -10,7 +10,7 @@ const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'landscaping_calculator',
-  ***REMOVED***: 'YourSecret***REMOVED***', // IM***REMOVED***ANT: Use your actual ***REMOVED***
+  ***REMOVED***: '***REMOVED***', // IM***REMOVED***ANT: Use your actual ***REMOVED***
   port: 5432,
 });
 
