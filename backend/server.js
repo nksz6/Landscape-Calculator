@@ -7,14 +7,13 @@ app.use(cors());
 const ***REMOVED*** = ***REMOVED***;
 
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'landscaping_calculator',
-    ***REMOVED***: '***REMOVED***', // <-- IM***REMOVED***ANT: This is actual ***REMOVED***!
-    port: 5432,
+  user: 'postgres',
+  host: 'localhost',
+  database: 'landscaping_calculator',
+  ***REMOVED***: '***REMOVED***', //PostgreSQL pass
+  port: 5432,
 });
 
-// GET all services with their pricing
 app.get('/api/services', async (req, res) => {
     try {
         const query = `
@@ -23,11 +22,20 @@ app.get('/api/services', async (req, res) => {
                 s.name,
                 s.description,
                 s.unit_label,
-                pr.price_per_unit
+                json_agg(
+                    json_build_object(
+                        'rule_id', pr.id,
+                        'material_name', pr.material_name,
+                        'price_per_unit', pr.price_per_unit,
+                        'minimum_charge', pr.minimum_charge
+                    )
+                ) as pricing_options
             FROM
                 services s
             LEFT JOIN
                 pricing_rules pr ON s.id = pr.service_id
+            GROUP BY
+                s.id
             ORDER BY
                 s.id;
         `;
