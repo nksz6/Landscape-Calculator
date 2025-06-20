@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
@@ -10,7 +12,7 @@ const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'landscaping_calculator',
-  ***REMOVED***: '***REMOVED***', //PostgreSQL pass
+  ***REMOVED***: process***REMOVED***.***REMOVED***, //pass in ***REMOVED*** of this folder
   port: 5432,
 });
 
