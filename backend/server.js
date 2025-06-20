@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
@@ -10,7 +12,7 @@ const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'landscaping_calculator',
-  password: 'IamtheAdmin420!', //PostgreSQL pass
+  password: process.env.DB_PASSWORD, //pass in .env of this folder
   port: 5432,
 });
 
