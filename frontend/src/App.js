@@ -1,73 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import ProjectDetails from './components/ProjectDetails';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import CalculatorView from './views/CalculatorView';
+import HomeView from './views/HomeView';
+import LoginView from './views/LoginView';
+import RegistrationView from './views/RegistrationView';
+import EstimatesView from './views/EstimatesView';
 import './App.css';
 
 function App() {
-  const [services, setServices] = useState([]);
-  const [selectedService, setSelectedService] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch('http://localhost:5001/api/services')
-      .then(res => {
-        if (!res.ok) {
-          // Throw an error if the server response is not "OK" (e.g., 404, 500)
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then(data => {
-        setServices(data);
-      })
-      .catch(error => {
-        // Catch any errors that happen during the fetch
-        console.error("Fetch Error:", error);
-        setError("Failed to load services. Please check your connection or try again later.");
-      })
-      .finally(() => {
-        // This runs whether the fetch succeeded or failed
-        setIsLoading(false);
-      });
-  }, []); // Empty dependency array means this still runs only once
-
-  const handleServiceSelect = (service) => {
-    setSelectedService(service);
-  };
-
-  if (error) {
-    return <div className="App-header"><p className="error-message">{error}</p></div>;
-  }
-
-  if (isLoading) {
-    return <div className="App-header"><p>Loading Services...</p></div>;
-  }
-
   return (
     <div className="App">
+      <Navbar />
       <header className="App-header">
-        <h1>Choose Your Service</h1>
-        <div className="service-list">
-          {services.map(service => {
-            const isSelected = selectedService && selectedService.id === service.id;
-            return (
-              <div
-                key={service.id}
-                className={`service-item ${isSelected ? 'selected' : ''}`}
-                onClick={() => handleServiceSelect(service)}
-              >
-                <h2>{service.name}</h2>
-                <p>{service.description}</p>
-              </div>
-            );
-          })}
-        </div>
-        {selectedService && (
-          <ProjectDetails
-            key={selectedService.id}
-            selectedService={selectedService}
-          />
-        )}
+        <Routes>
+          {/* Route for the main calculator page */}
+          <Route path="/" element={<CalculatorView />} />
+
+          {/* Route for the logged-in user's home/dashboard */}
+          <Route path="/home" element={<HomeView />} />
+
+          {/* Route for viewing saved estimates */}
+          <Route path="/estimates" element={<EstimatesView/>} />
+
+          {/* Route for the login page */}
+          <Route path="/login" element={<LoginView />} />
+
+          {/* Route for the registration page */}
+          <Route path="/registration" element={<RegistrationView />} />
+        </Routes>
       </header>
     </div>
   );
