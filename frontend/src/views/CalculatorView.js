@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProjectDetails from '../components/ProjectDetails';
+import ServiceList from '../components/ServiceList';
 import '../App.css';
 
 function CalculatorView() {
@@ -12,7 +13,6 @@ function CalculatorView() {
     fetch('http://localhost:5001/api/services')
       .then(res => {
         if (!res.ok) {
-          // Throw an error if the server response is not "OK" (e.g., 404, 500)
           throw new Error('Network response was not ok');
         }
         return res.json();
@@ -21,55 +21,42 @@ function CalculatorView() {
         setServices(data);
       })
       .catch(error => {
-        // Catch any errors that happen during the fetch
         console.error("Fetch Error:", error);
         setError("Failed to load services. Please check your connection or try again later.");
       })
       .finally(() => {
-        // This runs whether the fetch succeeded or failed
         setIsLoading(false);
       });
-  }, []); // Empty dependency array means this still runs only once
+  }, []);
 
   const handleServiceSelect = (service) => {
     setSelectedService(service);
   };
 
   if (error) {
-    return <div className="App-header"><p className="error-message">{error}</p></div>;
+    return <p className="error-message">{error}</p>;
   }
 
   if (isLoading) {
-    return <div className="App-header"><p>Loading Services...</p></div>;
+    return <p>Loading Services...</p>;
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Choose Your Service</h1>
-        <div className="service-list">
-          {services.map(service => {
-            const isSelected = selectedService && selectedService.id === service.id;
-            return (
-              <div
-                key={service.id}
-                className={`service-item ${isSelected ? 'selected' : ''}`}
-                onClick={() => handleServiceSelect(service)}
-              >
-                <h2>{service.name}</h2>
-                <p>{service.description}</p>
-              </div>
-            );
-          })}
-        </div>
-        {selectedService && (
-          <ProjectDetails
-            key={selectedService.id}
-            selectedService={selectedService}
-          />
-        )}
-      </header>
-    </div>
+    <>
+      <h1>Choose Your Service</h1>
+      <ServiceList
+        services={services}
+        selectedService={selectedService}
+        onServiceSelect={handleServiceSelect}
+      />
+
+      {selectedService && (
+        <ProjectDetails
+          key={selectedService.id}
+          selectedService={selectedService}
+        />
+      )}
+    </>
   );
 }
 
