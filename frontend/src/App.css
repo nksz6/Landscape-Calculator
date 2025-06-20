@@ -92,3 +92,19 @@
   color: #999;
   cursor: not-allowed;
 }
+
+.main-nav {
+  background-color: #20232a;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.main-nav a {
+  color: #61dafb;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+.main-nav a:hover {
+  color: white;
+}
