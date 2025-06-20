@@ -6,7 +6,7 @@ const { Pool } = require('pg');
 
 const app = express();
 app.use(cors());
-const ***REMOVED*** = ***REMOVED***;
+const ***REMOVED*** = process***REMOVED***.***REMOVED*** || ***REMOVED***;
 
 const pool = new Pool({
   user: 'postgres',
