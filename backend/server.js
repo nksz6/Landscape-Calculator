@@ -1,23 +1,23 @@
 require('dotenv').config();
-
 const express = require('express');
 const cors = require('cors');
-const { Pool } = require('pg');
+const pool = require('./db'); // Import the shared pool
 
 const app = express();
-app.use(cors());
 const PORT = process.env.PORT || 5001;
 
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'landscaping_calculator',
-  password: process.env.DB_PASSWORD, //pass in .env of this folder
-  port: 5432,
-});
+// --- Middleware ---
+app.use(cors());
+app.use(express.json()); // This is crucial for parsing JSON request bodies
 
+// --- API Routes ---
+const userRoutes = require('./routes/users');
+app.use('/api/users', userRoutes);
+
+// GET all services with their pricing
 app.get('/api/services', async (req, res) => {
     try {
+        // THIS IS THE CORRECTED QUERY
         const query = `
             SELECT
                 s.id,
@@ -48,6 +48,7 @@ app.get('/api/services', async (req, res) => {
         res.status(500).json({ error: 'Error fetching services' });
     }
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
