@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+// You will need to import these two hooks for the next step after login is working
+// import { useNavigate } from 'react-router-dom';
+// import { useAuth } from '../context/AuthContext';
 
 function RegistrationView() {
   const [email, setEmail] = useState('');
   const [***REMOVED***, set***REMOVED***] = useState('');
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState(null); // <-- THIS LINE WAS MISSING
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(null); // Reset errors
+    setError(null); 
     setSuccess(null);
 
     try {
@@ -24,8 +27,6 @@ function RegistrationView() {
         throw new Error(data.error || 'Something went wrong');
       }
 
-      // For now, we'll just log the token and show a success message.
-      // In the next step, we'll save this token and redirect the user.
       console.log('Received token:', data.token);
       setSuccess('Registration successful! You can now log in.');
 
