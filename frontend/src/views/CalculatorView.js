@@ -9,6 +9,7 @@ function CalculatorView() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  //useEffect hook
   useEffect(() => {
     fetch('http://localhost:***REMOVED***/api/services')
       .then(res => {
