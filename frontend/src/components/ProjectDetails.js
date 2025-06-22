@@ -7,7 +7,7 @@ function ProjectDetails({ selectedService }) {
   const [estimatedCost, setEstimatedCost] = useState(null);
   const [minChargeApplied, setMinChargeApplied] = useState(false);
 
-  // This effect resets the cost when the selected material changes
+  // This effect hook resets the cost when the selected material changes
   useEffect(() => {
     setEstimatedCost(null);
     setMinChargeApplied(false);
