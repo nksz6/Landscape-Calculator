@@ -15,23 +15,30 @@ function App() {
       <Navbar />
       <header className="App-header">
         <Routes>
-          {/* --- Public Routes --- */}
-          
-          {/* Route for the main calculator page */}
+          {/* --- Public Route --- */}
           <Route path="/" element={<CalculatorView />} />
 
           {/* --- Protected Routes --- */}
-
-          {/* Route for the logged-in user's home/dashboard */}
-          <Route path="/home" element={<HomeView />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <HomeView />
+              </ProtectedRoute>
+            }
+          />
           
-          {/* Route for viewing saved estimates */}
-          <Route path="/estimates" element={<EstimatesView/>} />
+          <Route 
+            path="/estimates"
+            element={
+              <ProtectedRoute>
+                <EstimatesView />
+              </ProtectedRoute>
+            }
+          />
 
-          {/* --- Guest Routes (for non-logged-in users --- */}
-          
+          {/* --- Guest Routes (for non-logged-in users) --- */}
           <Route path="/login" element={<LoginView />} />
-          
           <Route path="/registration" element={<RegistrationView />} />
         
         </Routes>
