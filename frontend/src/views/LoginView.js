@@ -25,8 +25,8 @@ function LoginView() {
         throw new Error(data.error || 'Something went wrong');
       }
       
-      login(data.token); // Use the login function from AuthContext
-      navigate('/home'); // Redirect to the home dashboard on success
+      login(data.token);
+      navigate('/home');
 
     } catch (err) {
       setError(err.message);
@@ -38,8 +38,10 @@ function LoginView() {
       <h1>Login</h1>
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="input-group">
-          <label>Email</label>
+          {/* Link the label to the input */}
+          <label htmlFor="login-email">Email</label>
           <input
+            id="login-email"
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
@@ -47,8 +49,10 @@ function LoginView() {
           />
         </div>
         <div className="input-group">
-          <label>Password</label>
+          {/* Link the label to the input */}
+          <label htmlFor="login-password">Password</label>
           <input
+            id="login-password"
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
