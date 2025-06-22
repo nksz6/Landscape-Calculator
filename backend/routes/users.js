@@ -5,7 +5,8 @@ const pool = require('../db'); // We will create this db connection file next
 
 const router = express.Router();
 
-// POST /api/users/register
+//step 1 - register
+// POST /api/users/register --- REGISTER
 router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -41,6 +42,46 @@ router.post('/register', async (req, res) => {
     if (err.code === '23505') {
       return res.status(400).json({ error: 'Email is already in use.' });
     }
+    res.status(500).send('Server error');
+  }
+});
+
+// step 2 - login
+// POST /api/users/login
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // 1. Validate input
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Please enter all fields.' });
+    }
+
+    // 2. Check if user exists
+    const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+    if (user.rows.length === 0) {
+      // We use a generic error message for security
+      return res.status(400).json({ error: 'Invalid credentials.' });
+    }
+
+    // 3. Compare the provided password with the stored hash
+    const isMatch = await bcrypt.compare(password, user.rows[0].password_hash);
+    if (!isMatch) {
+      return res.status(400).json({ error: 'Invalid credentials.' });
+    }
+
+    // 4. If credentials are correct, create and sign a JWT
+    const token = jwt.sign(
+      { id: user.rows[0].id },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    // 5. Send the token back to the client
+    res.json({ token });
+
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send('Server error');
   }
 });
