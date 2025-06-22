@@ -6,6 +6,7 @@ import HomeView from './views/HomeView';
 import LoginView from './views/LoginView';
 import RegistrationView from './views/RegistrationView';
 import EstimatesView from './views/EstimatesView';
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
 function App() {
@@ -14,20 +15,25 @@ function App() {
       <Navbar />
       <header className="App-header">
         <Routes>
+          {/* --- Public Routes --- */}
+          
           {/* Route for the main calculator page */}
           <Route path="/" element={<CalculatorView />} />
 
+          {/* --- Protected Routes --- */}
+
           {/* Route for the logged-in user's home/dashboard */}
           <Route path="/home" element={<HomeView />} />
-
+          
           {/* Route for viewing saved estimates */}
           <Route path="/estimates" element={<EstimatesView/>} />
 
-          {/* Route for the login page */}
+          {/* --- Guest Routes (for non-logged-in users --- */}
+          
           <Route path="/login" element={<LoginView />} />
-
-          {/* Route for the registration page */}
+          
           <Route path="/registration" element={<RegistrationView />} />
+        
         </Routes>
       </header>
     </div>
