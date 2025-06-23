@@ -1,13 +1,28 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const pool = require('../db'); // We will create this db connection file next
+const pool = require('../db');
+const { body, validationResult } = require('express-validator');
 
 const router = express.Router();
 
 //step 1 - register
 // POST /api/users/register --- REGISTER
-router.post('/register', async (req, res) => {
+
+//validation middleware to route definition
+router.post('/register',
+  [
+    body('email', 'Please include a valid email').isEmail(),
+    body('***REMOVED***', '***REMOVED*** must be at least 6 characters long').isLength({ min: 6 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      //return the first error message for simplicity
+      return res.status(400).json({ errors: errors.array()[0].msg });
+    }
+
+
   try {
     const { email, ***REMOVED*** } = req.body;
 
