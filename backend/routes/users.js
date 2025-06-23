@@ -2,53 +2,49 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('../db');
-const { body, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator'); //validation tools
 
 const router = express.Router();
 
-//step 1 - register
 // POST /api/users/register --- REGISTER
-
-//validation middleware to route definition
 router.post('/register',
+
+  //validation rules array
   [
     body('email', 'Please include a valid email').isEmail(),
     body('***REMOVED***', '***REMOVED*** must be at least 6 characters long').isLength({ min: 6 }),
+
   ],
   async (req, res) => {
+    //check for validation errors first.
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      //return the first error message for simplicity
-      return res.status(400).json({ errors: errors.array()[0].msg });
+      //if there are errors, send a 400 response with the first error message
+      return res.status(400).json({ error: errors.array()[0].msg });
     }
-
 
   try {
+    //rest of code will only run if the validation passes.
     const { email, ***REMOVED*** } = req.body;
 
-    // 1. Validate user input
-    if (!email || !***REMOVED***) {
-      return res.status(400).json({ error: 'Please enter all fields.' });
-    }
-
-    // 2. Hash the ***REMOVED***
+    // Hash the ***REMOVED***
     const salt = await bcrypt.genSalt(10);
     const ***REMOVED***Hash = await bcrypt.hash(***REMOVED***, salt);
 
-    // 3. Insert the new user into the database
+    //Insert the new user into the database
     const newUser = await pool.query(
       "INSERT INTO users (email, ***REMOVED***_hash) VALUES ($1, $2) RETURNING id, email",
       [email, ***REMOVED***Hash]
     );
 
-    // 4. Create and sign a JWT
+    //Create and sign a JWT
     const token = jwt.sign(
       { id: newUser.rows[0].id },
       process***REMOVED***.***REMOVED***,
       { expiresIn: '1h' }
     );
 
-    // 5. Send the token back to the client
+    //Send the token back to the client
     res.json({ token });
 
   } catch (err) {
@@ -61,7 +57,7 @@ router.post('/register',
   }
 });
 
-// step 2 - login
+// Will update the login route later, but for now it will stay the same.
 // POST /api/users/login
 router.post('/login', async (req, res) => {
   try {
@@ -75,7 +71,7 @@ router.post('/login', async (req, res) => {
     // 2. Check if user exists
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (user.rows.length === 0) {
-      // We use a generic error message for security
+      //Use a generic error message for security
       return res.status(400).json({ error: 'Invalid credentials.' });
     }
 
