@@ -28,7 +28,7 @@ function App() {
             }
           />
           
-          <Route 
+          <Route
             path="/estimates"
             element={
               <ProtectedRoute>
