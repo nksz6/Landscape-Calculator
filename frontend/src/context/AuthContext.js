@@ -27,6 +27,22 @@ export const AuthProvider = ({ children }) => {
 
   const login = (newToken) => {
     setToken(newToken);
+  
+    //Return a promise that resolves when the user state is updated.
+    return new Promise((resolve) => {
+      try {
+        const decoded = jwtDecode(newToken);
+        setUser({ id: decoded.id });
+        localStorage.setItem('token', newToken);
+        resolve();
+      } catch (e) {
+        // Handle invalid token
+        setUser(null);
+        localStorage.removeItem('token');
+        resolve();
+      }
+    })
+  
   };
 
   const logout = () => {

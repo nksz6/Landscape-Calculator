@@ -22,8 +22,9 @@ function RegistrationView() {
 
       const data = await response.json();
       if (!response.ok) { throw new Error(data.error || 'Something went wrong'); }
-
-      login(data.token);
+      
+      //wait for the login to complete before navigating
+      await login(data.token);
       navigate('/home');
 
     } catch (err) {
