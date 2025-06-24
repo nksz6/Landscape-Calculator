@@ -31,14 +31,14 @@ const authLimiter = rateLimit({
     max: 5, //limit each IP to 5 attemps per 'window' (every 1 hour)
     standardHeaders: true,
     legacyHeaders: false,
-    message: { error: 'Too many login attempts from this IP, please try again in an hour.' },
+    message: { error: 'Too many attempts from this IP, please try again in an hour.' }, //general message for both login and registration endpoints...
 });
 
 
 //Apply the limiters to the app
 app.use('/api', apiLimiter); //apply the general limiter to all API routes
 app.use('/api/users/login', authLimiter); //Apply the stricter limiter specifically to the login route
-//Could also apply auth limiter to '/api/users/register' for registration spam...
+app.use('/api/users/register', authLimiter); //also apply to the registration route
 
 
 
