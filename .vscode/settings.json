@@ -1,0 +1,7 @@
+{
+    "accessibility.verbosity.inlineCompletions": false,
+    "vsintellicode.typescript.completionsEnabled": false,
+    "vsintellicode.python.completionsEnabled": false,
+    "vsintellicode.java.completionsEnabled": false,
+    "vsintellicode.sql.completionsEnabled": false
+}
