@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db'); // Import the shared pool
+const rateLimit = require('express-rate-limit'); //Import the rate-limit package
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -10,6 +11,37 @@ const PORT = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json()); // This is crucial for parsing JSON request bodies
 
+
+// --- Configure and apply rate limiting ---
+
+
+//General API limiter (for all routes starting with /api)
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, //15 mins
+    max: 100, //limit each IP to 100 requests per 'window' (every 15 minutes)
+    standardHeaders: true, //return rate limit info in the 'RateLimit-*' headers
+    legacyHeaders: false, //disable the 'X-RateLimit-*' headers
+    message: { error: 'Too many requests from this IP, please try again after 15 minutes.'},
+});
+
+
+//Stricter Auth Limiter (specifically for login attempts)
+const authLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, //1 hour
+    max: 5, //limit each IP to 5 attemps per 'window' (every 1 hour)
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many login attempts from this IP, please try again in an hour.' },
+});
+
+
+//Apply the limiters to the app
+app.use('/api', apiLimiter); //apply the general limiter to all API routes
+app.use('/api/users/login', authLimiter); //Apply the stricter limiter specifically to the login route
+//Could also apply auth limiter to '/api/users/register' for registration spam...
+
+
+
 // --- API Routes ---
 const userRoutes = require('./routes/users');
 app.use('/api/users', userRoutes);
@@ -17,7 +49,6 @@ app.use('/api/users', userRoutes);
 // GET all services with their pricing
 app.get('/api/services', async (req, res) => {
     try {
-        // THIS IS THE CORRECTED QUERY
         const query = `
             SELECT
                 s.id,
