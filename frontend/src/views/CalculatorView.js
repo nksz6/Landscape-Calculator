@@ -44,7 +44,8 @@ function CalculatorView() {
 
   return (
     <>
-      <h1>Choose Your Service</h1>
+      <h1>Nick's Landscape Calculator</h1>
+      <h2>Choose Your Service</h2>
       <ServiceList
         services={services}
         selectedService={selectedService}
