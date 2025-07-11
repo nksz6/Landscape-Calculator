@@ -11,7 +11,7 @@ function CalculatorView() {
 
   //useEffect hook
   useEffect(() => {
-    fetch('http://localhost:***REMOVED***/api/services')
+    fetch(`${process***REMOVED***.REACT_APP_API_URL}/services`)
       .then(res => {
         if (!res.ok) {
           throw new Error('Network response was not ok');
