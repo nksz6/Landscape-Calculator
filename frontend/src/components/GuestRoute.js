@@ -15,6 +15,7 @@ function GuestRoute({ children }) {
 
     // If the user is NOT logged in (i.e., they are a guest),
     // render the child component they were trying to access (the Login or Registration page).
+    //yep
     return children;
 }
 
