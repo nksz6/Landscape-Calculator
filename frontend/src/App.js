@@ -7,6 +7,7 @@ import LoginView from './views/LoginView';
 import RegistrationView from './views/RegistrationView';
 import EstimatesView from './views/EstimatesView';
 import ProtectedRoute from './components/ProtectedRoute';
+import GuestRoute from './components/GuestRoute';
 import './App.css';
 
 function App() {
@@ -15,10 +16,10 @@ function App() {
       <Navbar />
       <header className="App-header">
         <Routes>
-          {/* --- Public Route --- */}
+          {/* Public Route */}
           <Route path="/" element={<CalculatorView />} />
 
-          {/* --- Protected Routes --- */}
+          {/* Protected Routes */}
           <Route
             path="/home"
             element={
@@ -37,9 +38,25 @@ function App() {
             }
           />
 
-          {/* --- Guest Routes (for non-logged-in users) --- */}
-          <Route path="/login" element={<LoginView />} />
-          <Route path="/registration" element={<RegistrationView />} />
+          {/* Guest Routes */}
+          {/* Wrapping LoginView in GuestRoute */}
+          <Route
+            path="/login"
+            element={
+              <GuestRoute>
+                <LoginView />
+              </GuestRoute>
+            }
+          />
+          {/*Wrapping RegistrationView in GuestRoute*/}
+          <Route
+            path="/registration"
+            element={
+              <GuestRoute>
+                <RegistrationView />
+              </GuestRoute>
+            }
+          />
         
         </Routes>
       </header>
@@ -48,3 +65,4 @@ function App() {
 }
 
 export default App;
+{/*It better work*/}
