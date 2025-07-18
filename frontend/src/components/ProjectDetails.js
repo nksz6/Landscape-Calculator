@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-function ProjectDetails({ selectedService }) {
+// --- ACCEPT THE NEW PROP HERE ---
+function ProjectDetails({ selectedService, onClearSelection }) {
   // State for the selected material option, defaults to the first option
   const [selectedOption, setSelectedOption] = useState(selectedService.pricing_options[0]);
   const [inputValue, setInputValue] = useState('');
@@ -45,7 +46,13 @@ function ProjectDetails({ selectedService }) {
 
     return (
         <div className="selection-details">
-            <h3>Details for: {selectedService.name}</h3>
+            {/* --- ADD THE BUTTON AND ONCLICK HANDLER --- */}
+            <div className="details-header">
+              <h3>Details for: {selectedService.name}</h3>
+              <button onClick={onClearSelection} className="clear-btn">
+                ×
+              </button>
+            </div>
 
             {/* Conditionally render the dropdown */}
             {showOptionsDropdown && (

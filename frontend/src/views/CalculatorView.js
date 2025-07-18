@@ -34,6 +34,12 @@ function CalculatorView() {
     setSelectedService(service);
   };
 
+  // --- ADD THIS FUNCTION ---
+  // This function will set the selected service back to null, hiding the details.
+  const handleClearSelection = () => {
+    setSelectedService(null);
+  };
+
   if (error) {
     return <p className="error-message">{error}</p>;
   }
@@ -56,6 +62,8 @@ function CalculatorView() {
         <ProjectDetails
           key={selectedService.id}
           selectedService={selectedService}
+          // --- PASS THE NEW FUNCTION AS A PROP ---
+          onClearSelection={handleClearSelection}
         />
       )}
     </>
