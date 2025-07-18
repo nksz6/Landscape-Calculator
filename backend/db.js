@@ -6,7 +6,6 @@ const pool = new Pool({
   host: 'localhost',
   database: 'landscaping_calculator',
   password: process.env.DB_PASSWORD,
-  // CORRECTED LINE: This should always be your PostgreSQL port, typically 5432.
   port: 5432,
 });
 
