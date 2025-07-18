@@ -46,6 +46,8 @@ app.use('/api/users/register', authLimiter); //also apply to the registration ro
 const userRoutes = require('./routes/users');
 app.use('/api/users', userRoutes);
 
+//the Express server is listening.
+
 // GET all services with their pricing
 app.get('/api/services', async (req, res) => {
     try {

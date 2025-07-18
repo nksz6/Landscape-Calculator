@@ -17,7 +17,7 @@
   max-width: 750px;
 }
 .service-item {
-  border: 1px solid #61dafb;
+  border: 3px solid blue;
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 15px;
@@ -39,8 +39,9 @@
 .selection-details {
   margin-top: 30px;
   padding: 20px;
-  border: 2px dashed #61dafb;
+  border: 5px double blue;
   border-radius: 8px;
+  position: relative;
 }
 .input-group {
   margin: 20px 0;
@@ -122,4 +123,36 @@
 }
 .logout-btn:hover {
   color: white;
+}
+/* ... at the end of the file ... */
+
+.details-header {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.details-header h3 {
+  margin: 0;
+}
+
+.clear-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: 1px solid #888;
+  color: #ccc;
+  border-radius: 50%; /* Makes it a circle */
+  width: 30px;
+  height: 30px;
+  font-size: 1.2rem;
+  line-height: 1; /* Helps center the 'x' */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.clear-btn:hover {
+  background-color: #5a2a2a;
+  color: white;
+  border-color: #ff4d4d;
 }
