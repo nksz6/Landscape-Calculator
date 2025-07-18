@@ -13,18 +13,37 @@ function Navbar() {
 
   return (
     <nav className="main-nav">
-      <Link to="/">Calculator</Link>
+      {/* --- Zone 1: Left Justified --- */}
+      <div className="nav-left">
+        <span className="nav-title">Nick's Landscape Calculator</span>
+      </div>
+
       {user ? (
         <>
-          {/* Show these links if the user IS logged in */}
-          <Link to="/home">Home</Link>
-          <button onClick={handleLogout} className="logout-btn">Logout</button>
+          {/* --- LOGGED-IN STATE --- */}
+          {/* --- Zone 2: Center Justified --- */}
+          <div className="nav-center">
+            <Link to="/home">Home</Link>
+            <Link to="/">Calculator</Link>
+            <Link to="/estimates">Estimates</Link>
+          </div>
+          {/* --- Zone 3: Right Justified --- */}
+          <div className="nav-right">
+            <button onClick={handleLogout} className="logout-btn">Logout</button>
+          </div>
         </>
       ) : (
         <>
-          {/* Show these links if the user IS NOT logged in */}
-          <Link to="/login">Login</Link>
-          <Link to="/registration">Register</Link>
+          {/* --- LOGGED-OUT STATE --- */}
+          {/* --- Zone 2: Center Justified --- */}
+          <div className="nav-center">
+            <Link to="/">Calculator</Link>
+          </div>
+          {/* --- Zone 3: Right Justified --- */}
+          <div className="nav-right">
+            <Link to="/login">Login</Link>
+            <Link to="/registration">Register</Link>
+          </div>
         </>
       )}
     </nav>
