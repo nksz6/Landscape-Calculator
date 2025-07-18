@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding-top: 4rem;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -96,11 +96,44 @@
 
 .main-nav {
   background-color: #20232a;
-  padding: 1rem;
+  padding: 1rem 2rem; /* Add horizontal padding */
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* This is the magic! */
+  align-items: center;
+  position: fixed; /* Fix it to the top */
+  top: 0;
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding is included in the width */
+  z-index: 1000; /* Keeps it above other content */
+  position: relative;
+}
+/* new rules for the zones */
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  flex: 1 0 auto;
+}
+
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-right {
+  justify-content: flex-end;
   gap: 1.5rem;
 }
+
+.nav-title {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2 rem;
+
+}
+
 .main-nav a {
   color: lightblue;
   text-decoration: none;
