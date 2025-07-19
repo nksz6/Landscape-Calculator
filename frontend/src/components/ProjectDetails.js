@@ -48,7 +48,7 @@ function ProjectDetails({ selectedService, onClearSelection }) {
         <div className="selection-details">
             {/* --- ADD THE BUTTON AND ONCLICK HANDLER --- */}
             <div className="details-header">
-              <h3>Details for: {selectedService.name}</h3>
+              <h3> {selectedService.name} </h3>
               <button onClick={onClearSelection} className="clear-btn">
                 ×
               </button>
