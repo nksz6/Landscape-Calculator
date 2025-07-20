@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProjectDetails from '../components/ProjectDetails';
 import ServiceList from '../components/ServiceList';
+import ServiceListSkeleton from '../components/ServiceListSkeleton';
 import '../App.css';
 
 function CalculatorView() {
@@ -11,31 +12,33 @@ function CalculatorView() {
 
   //useEffect hook
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/services`)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then(data => {
-        setServices(data);
-      })
-      .catch(error => {
-        console.error("Fetch Error:", error);
-        setError("Failed to load services. Please check your connection or try again later.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    // A small delay to make the skeleton visible for demonstration.
+    // In a real app, you would remove this setTimeout.
+    setTimeout(() => {
+      fetch(`${process.env.REACT_APP_API_URL}/services`)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.json();
+        })
+        .then(data => {
+          setServices(data);
+        })
+        .catch(error => {
+          console.error("Fetch Error:", error);
+          setError("Failed to load services. Please check your connection or try again later.");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }, 1500); // 1.5 second delay (review and remove before production!)
   }, []);
 
   const handleServiceSelect = (service) => {
     setSelectedService(service);
   };
 
-  // --- ADD THIS FUNCTION ---
-  // This function will set the selected service back to null, hiding the details.
   const handleClearSelection = () => {
     setSelectedService(null);
   };
@@ -45,7 +48,7 @@ function CalculatorView() {
   }
 
   if (isLoading) {
-    return <p>Loading Services...</p>;
+    return <ServiceListSkeleton />
   }
 
   return (
@@ -61,7 +64,6 @@ function CalculatorView() {
         <ProjectDetails
           key={selectedService.id}
           selectedService={selectedService}
-          // --- PASS THE NEW FUNCTION AS A PROP ---
           onClearSelection={handleClearSelection}
         />
       )}

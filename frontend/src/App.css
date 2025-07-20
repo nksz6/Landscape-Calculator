@@ -202,3 +202,52 @@
   color: white;
   border-color: #ff4d4d;
 }
+.service-item-skeleton {
+  border: 1px solid #333; /* Darker border for the skeleton */
+  background-color: #20232a; /* Same as nav background */
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+  overflow: hidden; /* This is CRUCIAL for the shimmer effect */
+  position: relative; /* Also crucial for the shimmer */
+}
+
+.skeleton-line {
+  height: 1.2rem; /* Matches font size */
+  background-color: #3a3f4a;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.skeleton-line.title {
+  width: 40%;
+  height: 1.5rem; /* A bit bigger for the title */
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+/* The Shimmer Animation Effect */
+.service-item-skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.08) 20%,
+    rgba(255, 255, 255, 0.2) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
