@@ -251,3 +251,30 @@
     transform: translateX(100%);
   }
 }
+
+.save-section {
+  margin-top: 15px;
+}
+
+.save-btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+  background-color: #45a049;
+}
+
+/* reuse the existing error-message class */
+.success-message {
+  color: #61dafb; /* A nice blue for success */
+}
