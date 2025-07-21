@@ -44,7 +44,10 @@ app.use('/api/users/register', authLimiter); //also apply to the registration ro
 
 // --- API Routes ---
 const userRoutes = require('./routes/users');
+const estimateRoutes = require('./routes/estimates'); //requiring new root file
+
 app.use('/api/users', userRoutes);
+app.use('/api/estimates', estimateRoutes); //USE new route
 
 //the Express server is listening.
 
