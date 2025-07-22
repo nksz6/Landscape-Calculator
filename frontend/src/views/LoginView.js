@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 function LoginView() {
   const [email, setEmail] = useState('');
-  const [***REMOVED***, set***REMOVED***] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -14,10 +14,10 @@ function LoginView() {
     setError(null);
 
     try {
-      const response = await fetch(`${process***REMOVED***.REACT_APP_API_URL}/users/login`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, ***REMOVED*** }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -25,8 +25,6 @@ function LoginView() {
         throw new Error(data.error || 'Something went wrong');
       }
 
-
-      //wait for the login to complete before navigating
       await login(data.token);
       navigate('/home');
 
@@ -40,7 +38,6 @@ function LoginView() {
       <h1>Login</h1>
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="input-group">
-          {/* Link the label to the input */}
           <label htmlFor="login-email">Email</label>
           <input
             id="login-email"
@@ -51,13 +48,12 @@ function LoginView() {
           />
         </div>
         <div className="input-group">
-          {/* Link the label to the input */}
-          <label htmlFor="login-***REMOVED***">***REMOVED***</label>
+          <label htmlFor="login-password">Password</label>
           <input
-            id="login-***REMOVED***"
-            type="***REMOVED***"
-            value={***REMOVED***}
-            onChange={e => set***REMOVED***(e.target.value)}
+            id="login-password"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             required
           />
         </div>

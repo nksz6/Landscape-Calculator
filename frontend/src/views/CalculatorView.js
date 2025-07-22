@@ -10,12 +10,9 @@ function CalculatorView() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  //useEffect hook
   useEffect(() => {
-    // A small delay to make the skeleton visible for demonstration.
-    // In a real app, you would remove this setTimeout.
     setTimeout(() => {
-      fetch(`${process***REMOVED***.REACT_APP_API_URL}/services`)
+      fetch(`${process.env.REACT_APP_API_URL}/services`)
         .then(res => {
           if (!res.ok) {
             throw new Error('Network response was not ok');
@@ -32,7 +29,7 @@ function CalculatorView() {
         .finally(() => {
           setIsLoading(false);
         });
-    }, 1500); // 1.5 second delay (review and remove before production!)
+    }, 1500);
   }, []);
 
   const handleServiceSelect = (service) => {

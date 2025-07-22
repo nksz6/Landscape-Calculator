@@ -109,18 +109,18 @@
 
 .main-nav {
   background-color: #20232a;
-  padding: 1rem 2rem; /* Add horizontal padding */
+  padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between; /* This is the magic! */
+  justify-content: space-between;
   align-items: center;
-  position: fixed; /* Fix it to the top */
+  position: fixed;
   top: 0;
   width: 100%;
-  box-sizing: border-box; /* Ensures padding is included in the width */
-  z-index: 1000; /* Keeps it above other content */
+  box-sizing: border-box;
+  z-index: 1000;
   position: relative;
 }
-/* new rules for the zones */
+
 .nav-left, .nav-right {
   display: flex;
   align-items: center;
@@ -170,7 +170,6 @@
 .logout-btn:hover {
   color: white;
 }
-/* ... at the end of the file ... */
 
 .details-header {
   margin-bottom: 20px;
@@ -188,11 +187,11 @@
   background: none;
   border: 1px solid #888;
   color: #ccc;
-  border-radius: 50%; /* Makes it a circle */
+  border-radius: 50%;
   width: 30px;
   height: 30px;
   font-size: 1.2rem;
-  line-height: 1; /* Helps center the 'x' */
+  line-height: 1;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
@@ -203,17 +202,17 @@
   border-color: #ff4d4d;
 }
 .service-item-skeleton {
-  border: 1px solid #333; /* Darker border for the skeleton */
-  background-color: #20232a; /* Same as nav background */
+  border: 1px solid #333;
+  background-color: #20232a;
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 15px;
-  overflow: hidden; /* This is CRUCIAL for the shimmer effect */
-  position: relative; /* Also crucial for the shimmer */
+  overflow: hidden;
+  position: relative;
 }
 
 .skeleton-line {
-  height: 1.2rem; /* Matches font size */
+  height: 1.2rem;
   background-color: #3a3f4a;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -221,14 +220,13 @@
 
 .skeleton-line.title {
   width: 40%;
-  height: 1.5rem; /* A bit bigger for the title */
+  height: 1.5rem;
 }
 
 .skeleton-line.short {
   width: 60%;
 }
 
-/* The Shimmer Animation Effect */
 .service-item-skeleton::after {
   content: '';
   position: absolute;
@@ -257,7 +255,7 @@
 }
 
 .save-btn {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -274,12 +272,10 @@
   background-color: #45a049;
 }
 
-/* reuse the existing error-message class */
 .success-message {
-  color: #61dafb; /* A nice blue for success */
+  color: #61dafb;
 }
 
-/* --- ESTIMATES VIEW STYLES --- */
 .view-container {
   width: 100%;
   max-width: 900px;

@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 function RegistrationView() {
   const [email, setEmail] = useState('');
-  const [***REMOVED***, set***REMOVED***] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -14,16 +14,15 @@ function RegistrationView() {
     setError(null);
 
     try {
-      const response = await fetch(`${process***REMOVED***.REACT_APP_API_URL}/users/register`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, ***REMOVED*** }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
       if (!response.ok) { throw new Error(data.error || 'Something went wrong'); }
       
-      //wait for the login to complete before navigating
       await login(data.token);
       navigate('/home');
 
@@ -37,7 +36,6 @@ function RegistrationView() {
       <h1>Create an Account</h1>
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="input-group">
-          {/* Link the label to the input */}
           <label htmlFor="register-email">Email</label>
           <input
             id="register-email"
@@ -48,13 +46,12 @@ function RegistrationView() {
           />
         </div>
         <div className="input-group">
-          {/* Link the label to the input */}
-          <label htmlFor="register-***REMOVED***">***REMOVED***</label>
+          <label htmlFor="register-password">Password</label>
           <input
-            id="register-***REMOVED***"
-            type="***REMOVED***"
-            value={***REMOVED***}
-            onChange={e => set***REMOVED***(e.target.value)}
+            id="register-password"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             required
           />
         </div>

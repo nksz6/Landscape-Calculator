@@ -5,7 +5,7 @@ const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'landscaping_calculator',
-  ***REMOVED***: process***REMOVED***.***REMOVED***,
+  password: process.env.DB_PASSWORD,
   port: 5432,
 });
 

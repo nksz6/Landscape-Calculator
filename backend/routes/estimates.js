@@ -1,6 +1,6 @@
 const express = require('express');
 const pool = require('../db');
-const authMiddleware = require('../middleware/authMiddleware'); //import middleware
+const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -31,18 +31,17 @@ router.post('/', authMiddleware, async (req, res) => {
             [userId, serviceName, materialName, inputValue, unitLabel, estimatedCost]
         );
 
-        res.status(201).json(newEstimate.rows[0]); // 201 is "success"
+        res.status(201).json(newEstimate.rows[0]);
 
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error'); //obviously 500 is bad
+        res.status(500).send('Server Error');
     }
 });
 
 router.get('/', authMiddleware, async (req, res) => {
     try {
         const userId = req.user.id;
-        //req.user.id should be available cause of middleware
 
         const allEstimates = await pool.query(
             "SELECT * FROM estimates WHERE user_id = $1 ORDER BY created_at DESC",

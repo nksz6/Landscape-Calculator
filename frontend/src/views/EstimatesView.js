@@ -6,15 +6,14 @@ function EstimatesView() {
   const [estimates, setEstimates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { token } = useAuth(); // We need the token to authenticate our API request
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchEstimates = async () => {
       try {
-        const response = await fetch(`${process***REMOVED***.REACT_APP_API_URL}/estimates`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/estimates`, {
           method: 'GET',
           headers: {
-            // This header is crucial for our protected route!
             'Authorization': `Bearer ${token}`,
           },
         });
@@ -35,11 +34,10 @@ function EstimatesView() {
     if (token) {
       fetchEstimates();
     }
-  }, [token]); // The effect depends on the token
+  }, [token]);
 
   if (isLoading) {
     return <p>Loading your saved estimates...</p>;
-    // We could create a skeleton loader for this view too!
   }
 
   if (error) {

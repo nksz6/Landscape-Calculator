@@ -8,14 +8,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // When the token changes, update the user state
     if (token) {
       try {
         const decoded = jwtDecode(token);
         setUser({ id: decoded.id });
         localStorage.setItem('token', token);
       } catch (e) {
-        // Handle invalid token
         setUser(null);
         localStorage.removeItem('token');
       }
@@ -28,7 +26,6 @@ export const AuthProvider = ({ children }) => {
   const login = (newToken) => {
     setToken(newToken);
   
-    //Return a promise that resolves when the user state is updated.
     return new Promise((resolve) => {
       try {
         const decoded = jwtDecode(newToken);
@@ -36,7 +33,6 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', newToken);
         resolve();
       } catch (e) {
-        // Handle invalid token
         setUser(null);
         localStorage.removeItem('token');
         resolve();
@@ -63,7 +59,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook to easily use the auth context
 export const useAuth = () => {
   return useContext(AuthContext);
 };
