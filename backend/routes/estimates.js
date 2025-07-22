@@ -1,14 +1,14 @@
 const express = require('express');
 const pool = require('../db');
-const authMiddleware = require('../middleware/authMiddleware'); // Import our new middleware
+const authMiddleware = require('../middleware/authMiddleware'); //import middleware
 
 const router = express.Router();
 
+//code for saving an estimate
 // @route   POST api/estimates
 // @desc    Save a new estimate
 // @access  Private
 router.post('/', authMiddleware, async (req, res) => {
-    // Because of authMiddleware, we have access to req.user.id
     const userId = req.user.id;
     const {
         serviceName,
@@ -31,11 +31,29 @@ router.post('/', authMiddleware, async (req, res) => {
             [userId, serviceName, materialName, inputValue, unitLabel, estimatedCost]
         );
 
-        res.status(201).json(newEstimate.rows[0]); // 201 Created is the correct status code
+        res.status(201).json(newEstimate.rows[0]); // 201 is "success"
 
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Server Error'); //obviously 500 is bad
+    }
+});
+
+router.get('/', authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        //req.user.id should be available cause of middleware
+
+        const allEstimates = await pool.query(
+            "SELECT * FROM estimates WHERE user_id = $1 ORDER BY created_at DESC",
+            [userId]
+        );
+
+        res.json(allEstimates.rows);
+
+    } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
     }
 });
 
