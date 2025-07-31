@@ -52,7 +52,7 @@ I am also using it to help me learn and demonstrate my full-stack development sk
 *   **API Communication:** Fetch API
 
 ### Development & Testing
-*   **Backend Testing:** ( WIP )
+*   **Backend Testing:** [Jest](https://jestjs.io/)
 *   **Frontend Testing:** [Jest](https://jestjs.io/), [React Testing Library](https://testing-library.com/)
 
 ---
