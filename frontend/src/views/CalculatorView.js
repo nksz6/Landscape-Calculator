@@ -11,25 +11,23 @@ function CalculatorView() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      fetch(`${process.env.REACT_APP_API_URL}/services`)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return res.json();
-        })
-        .then(data => {
-          setServices(data);
-        })
-        .catch(error => {
-          console.error("Fetch Error:", error);
-          setError("Failed to load services. Please check your connection or try again later.");
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }, 0); //fine at zero but maybe remove
+    fetch(`${process.env.REACT_APP_API_URL}/services`) //direct fetch
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return res.json();
+    })
+    .then(data => {
+      setServices(data);
+    })
+    .catch(error => {
+      console.error("Fetch Error:", error);
+      setError("Failed to load services. Please check your connection or try again later.");
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
   }, []);
 
   const handleServiceSelect = (service) => {
