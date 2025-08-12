@@ -1,24 +1,18 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-//production config
-const proConfig = {
+const isProduction = process.env.NODE_ENV === 'production';
+
+const connectionConfig = {
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
 };
 
-//dev/local config
-const devConfig = {
-  user: 'postgres',
-  host: 'localhost',
-  database: 'landscaping_calculator',
-  password: process.env.DB_PASSWORD,
-  port: 5432,
-};
-
-//if DATABASE_URL set use the production config, otherwise use dev config
-const pool = new Pool(process.env.DATABASE_URL ? proConfig : devConfig);
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
+});
 
 module.exports = pool;
