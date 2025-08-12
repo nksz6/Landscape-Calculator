@@ -41,7 +41,6 @@ router.post('/register',
     res.json({ token });
 
   } catch (err) {
-    console.error(err.message);
     if (err.code === '23505') {
       return res.status(400).json({ error: 'Email is already in use.' });
     }
@@ -78,7 +77,6 @@ router.post('/login', async (req, res) => {
     res.json({ token });
 
   } catch (err) {
-    console.error(err.message);
     res.status(500).send('Server error');
   }
 });

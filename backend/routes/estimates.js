@@ -34,7 +34,6 @@ router.post('/', authMiddleware, async (req, res) => {
         res.status(201).json(newEstimate.rows[0]);
 
     } catch (err) {
-        console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
@@ -51,7 +50,6 @@ router.get('/', authMiddleware, async (req, res) => {
         res.json(allEstimates.rows);
 
     } catch (err) {
-    console.error(err.message);
     res.status(500).send('Server Error');
     }
 });
