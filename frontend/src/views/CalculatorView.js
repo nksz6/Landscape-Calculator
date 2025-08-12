@@ -29,7 +29,7 @@ function CalculatorView() {
         .finally(() => {
           setIsLoading(false);
         });
-    }, 1500);
+    }, 0); //fine at zero but maybe remove
   }, []);
 
   const handleServiceSelect = (service) => {
