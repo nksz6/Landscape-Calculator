@@ -17,9 +17,9 @@ A full-stack web application designed to provide instant cost estimates for comm
 
 ## Description
 
-This project was inspired by the need to make my job easier, it is a tool to help with the bidding process.
+I created this project to apply my web development skills towards an industry I am passionate about.
 
-I am also using it to help me learn and demonstrate my full-stack development skills.
+My inspiration was to automate (or atleast make easier) a part of my job.
 
 ---
 
