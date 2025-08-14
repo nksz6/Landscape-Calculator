@@ -48,7 +48,7 @@ My inspiration was to automate (or atleast make easier) a part of my job.
 *   **Library:** [React.js](https://reactjs.org/)
 *   **Routing:** [React Router](https://reactrouter.com/)
 *   **State Management:** React Context API
-*   **Styling:** CSS3, with a focus on responsive design
+*   **Styling:** CSS3, with a focus on design responsiveness
 *   **API Communication:** Fetch API
 
 ### Development & Testing
