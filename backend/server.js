@@ -8,6 +8,7 @@ const app = express();
 app.set('trust proxy', 1);
 const PORT = process.env.PORT || 5001;
 
+
 // --- EXPLICIT CORS CONFIGURATION ---
 const allowedOrigins = [
   'https://nikelley.com',
@@ -16,23 +17,20 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    return callback(null, true);
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Explicitly allow OPTIONS
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
 
+
 // --- MIDDLEWARE ---
 app.use(cors(corsOptions));
-
-app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
@@ -89,7 +87,6 @@ app.get('/api/services', async (req, res) => {
         res.json(result.rows);
     } catch (err) {
         console.error(err.message);
-        //send a JSON error for consistency
         res.status(500).json({ error: 'Error fetching services' });
     }
 });
