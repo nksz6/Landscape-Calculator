@@ -8,12 +8,9 @@ const router = express.Router();
 
 // POST /api/users/register --- REGISTER
 router.post('/register',
-
-  //validation rules array
   [
     body('email', 'Please include a valid email').isEmail(),
     body('password', 'Password must be at least 6 characters long').isLength({ min: 6 }),
-
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -21,32 +18,38 @@ router.post('/register',
       return res.status(400).json({ error: errors.array()[0].msg });
     }
 
-  try {
-    const { email, password } = req.body;
+    try {
+      const { email, password } = req.body;
 
-    const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(password, salt);
+      const salt = await bcrypt.genSalt(10);
+      const passwordHash = await bcrypt.hash(password, salt);
 
-    const newUser = await pool.query(
-      "INSERT INTO users (email, passwordHash) VALUES ($1, $2) RETURNING id, email",
-      [email, passwordHash]
-    );
+      //corrected column name
+      const newUser = await pool.query(
+        "INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email",
+        [email, passwordHash]
+      );
 
-    const token = jwt.sign(
-      { id: newUser.rows[0].id },
-      'this-is-a-super-simple-secret-for-testing-only', //simple hardcoded string for testing
-      { expiresIn: '1h' }
-    );
+      //use env variable
+      const token = jwt.sign(
+        { id: newUser.rows[0].id },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
 
-    res.json({ token });
+      res.json({ token });
 
-  } catch (err) {
-    if (err.code === '23505') {
-      return res.status(400).json({ error: 'Email is already in use.' });
+    } catch (err) {
+      //log error msg
+      console.error("Registration Error:", err.message);
+
+      if (err.code === '23505') {
+        return res.status(400).json({ error: 'Email is already in use.' });
+      }
+      res.status(500).send('Server error');
     }
-    res.status(500).send('Server error');
   }
-});
+);
 
 // POST /api/users/login
 router.post('/login', async (req, res) => {
@@ -57,7 +60,6 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Please enter all fields.' });
     }
 
-  
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (user.rows.length === 0) {
       return res.status(400).json({ error: 'Invalid credentials.' });
@@ -68,6 +70,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Invalid credentials.' });
     }
 
+    //make sure login uses it too
     const token = jwt.sign(
       { id: user.rows[0].id },
       process.env.JWT_SECRET,
@@ -77,6 +80,8 @@ router.post('/login', async (req, res) => {
     res.json({ token });
 
   } catch (err) {
+    //add logging to login route
+    console.error("Login Error:", err.message);
     res.status(500).send('Server error');
   }
 });
