@@ -34,7 +34,7 @@ router.post('/register',
 
     const token = jwt.sign(
       { id: newUser.rows[0].id },
-      process.env.JWT_SECRET,
+      'this-is-a-super-simple-secret-for-testing-only', //simple hardcoded string for testing
       { expiresIn: '1h' }
     );
 
