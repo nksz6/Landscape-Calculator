@@ -1,6 +1,8 @@
 # Nick's Landscape Calculator
 
-A full-stack web application designed to provide instant cost estimates for common landscaping projects.
+A full-stack web application designed to provide instant cost estimates for landscaping projects.
+
+Check out the [Live Demo](https://www.nikelley.com)!
 
 ---
 
@@ -17,9 +19,10 @@ A full-stack web application designed to provide instant cost estimates for comm
 
 ## Description
 
-I created this project to apply my web development skills towards an industry I am passionate about.
+I created this project to apply my web development skills towards my work as a Landscaper.
 
-My inspiration was to automate (or atleast make easier) a part of my job.
+My inspiration was to make bidding a little easier and increase my confidence about the estimates I'm making.
+The guy who runs my company really regretted not charging people more when he started the company so I want to make sure I'm being compensated fairly for my work. 
 
 ---
 
