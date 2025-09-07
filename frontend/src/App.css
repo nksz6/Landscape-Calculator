@@ -331,3 +331,9 @@
   color: #aaa;
   text-align: right;
 }
+
+.welcome-message {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+}

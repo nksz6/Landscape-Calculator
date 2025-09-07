@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        setUser({ id: decoded.id });
+        setUser({ id: decoded.id, email: decoded.email });
         localStorage.setItem('token', token);
       } catch (e) {
         setUser(null);
@@ -25,20 +25,6 @@ export const AuthProvider = ({ children }) => {
 
   const login = (newToken) => {
     setToken(newToken);
-  
-    return new Promise((resolve) => {
-      try {
-        const decoded = jwtDecode(newToken);
-        setUser({ id: decoded.id });
-        localStorage.setItem('token', newToken);
-        resolve();
-      } catch (e) {
-        setUser(null);
-        localStorage.removeItem('token');
-        resolve();
-      }
-    })
-  
   };
 
   const logout = () => {
