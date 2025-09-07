@@ -3,10 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('../db');
 const { body, validationResult } = require('express-validator');
-
 const router = express.Router();
 
-// POST /api/users/register --- REGISTER
 router.post('/register',
   [
     body('email', 'Please include a valid email').isEmail(),
@@ -17,20 +15,17 @@ router.post('/register',
     if (!errors.isEmpty()) {
       return res.status(400).json({ error: errors.array()[0].msg });
     }
-
     try {
       const { email, password } = req.body;
 
       const salt = await bcrypt.genSalt(10);
       const passwordHash = await bcrypt.hash(password, salt);
 
-      //corrected column name
       const newUser = await pool.query(
         "INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email",
         [email, passwordHash]
       );
 
-      //use env variable
       const token = jwt.sign(
         { id: newUser.rows[0].id },
         process.env.JWT_SECRET,
@@ -40,7 +35,6 @@ router.post('/register',
       res.json({ token });
 
     } catch (err) {
-      //log error msg
       console.error("Registration Error:", err.message);
 
       if (err.code === '23505') {
@@ -51,7 +45,6 @@ router.post('/register',
   }
 );
 
-// POST /api/users/login
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -69,8 +62,6 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ error: 'Invalid credentials.' });
     }
-
-    //make sure login uses it too
     const token = jwt.sign(
       { id: user.rows[0].id },
       process.env.JWT_SECRET,
@@ -80,7 +71,6 @@ router.post('/login', async (req, res) => {
     res.json({ token });
 
   } catch (err) {
-    //add logging to login route
     console.error("Login Error:", err.message);
     res.status(500).send('Server error');
   }
