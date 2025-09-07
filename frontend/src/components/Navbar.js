@@ -29,6 +29,7 @@ function Navbar() {
           </div>
           {/* --- Zone 3: Right Justified --- */}
           <div className="nav-right">
+            <span className="welcome-message">Welcome, {user.email}</span>
             <button onClick={handleLogout} className="logout-btn">Logout</button>
           </div>
         </>
