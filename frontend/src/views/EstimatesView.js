@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import '../App.css'; // We will add styles here
+import '../App.css';
 
 function EstimatesView() {
   const [estimates, setEstimates] = useState([]);
