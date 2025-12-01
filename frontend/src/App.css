@@ -288,7 +288,7 @@
 }
 
 .estimate-card {
-  background-color: white;
+  background-color: grey;
   border: 1px solid black;
   border-radius: 8px;
   padding: 1.5rem;
@@ -300,7 +300,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 1px solid #3a3f4a;
+  border-bottom: 1px solid black;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
 }
@@ -308,7 +308,7 @@
 .estimate-header h2 {
   margin: 0;
   font-size: 1.5rem;
-  color: #61dafb;
+  color: green;
 }
 
 .estimate-cost {
@@ -323,12 +323,16 @@
   font-size: 1.1rem;
 }
 
+estimate-body strong {
+  color: green;
+}
+
 .estimate-footer {
   margin-top: 1.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid #3a3f4a;
+  border-top: 1px solid black;
   font-size: 0.9rem;
-  color: #aaa;
+  color: black;
   text-align: right;
 }
 
