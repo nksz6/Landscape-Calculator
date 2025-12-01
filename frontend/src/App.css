@@ -290,6 +290,7 @@
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   text-align: left;
+  color: white;
 }
 
 .estimate-header {
@@ -314,9 +315,14 @@
   color: white;
 }
 
+.estimate-body {
+  color: white
+}
+
 .estimate-body p {
   margin: 0.5rem 0;
   font-size: 1.1rem;
+  color: white
 }
 
 estimate-body strong {
