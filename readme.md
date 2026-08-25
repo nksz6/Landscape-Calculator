@@ -2,11 +2,18 @@
 
 A full-stack web application designed to provide instant cost estimates for landscaping projects.
 
-Check out the [Live Demo](https://www.nikelley.com)!
+> ### Status: Archived
+>
+> This project was retired in August 2026. The live demo has been taken down, along with the
+> backend API and PostgreSQL database it depended on. The code is preserved here as a portfolio
+> reference and is no longer maintained. Note that it will not run as-is: the database schema
+> lived only in the now-deleted instance and is not included in this repo.
 
 ---
 
 ![Screenshot of Calculator View](assets/lc-calc-view-png.png)
+
+*The calculator view, from when the app was live.*
 
 ---
 
